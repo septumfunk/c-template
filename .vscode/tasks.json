@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "make fresh",
+            "type": "shell",
+            "command": "make fresh",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+        },
+        {
+            "label": "make debug",
+            "type": "shell",
+            "command": "make debug",
+            "group": {
+                "kind": "build",
+            },
+        }
+    ]
+}
+  

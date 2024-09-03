@@ -1,0 +1,7 @@
+[
+    {
+        "command": "clang -std=c99 -Wall -Wextra -Wconversion -pedantic -g -O2 -O3 -c src/main.c -o \"out/o/main.o\"\r",
+        "directory": "c:/Users/James/Documents/Code/c-template",
+        "file": "c:\\Users\\James\\Documents\\Code\\c-template\\src\\main.c"
+    }
+]

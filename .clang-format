@@ -1,0 +1,10 @@
+﻿---
+BasedOnStyle: LLVM
+AlignAfterOpenBracket: DontAlign
+AlignConsecutiveMacros: true
+ColumnLimit: 120
+IndentWidth: 4
+TabWidth: 4
+IndentWrappedFunctionNames: false
+PointerAlignment: Right
+UseTab: Never
