@@ -16,7 +16,7 @@ rwildcard = $(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(
 
 # Sources
 SRCS := $(call rwildcard,$(SRCDIR),*.c)
-OBJS := $(patsubst $(SRCDIR)/%.c, $(OUTDIR)/o/%.o, $(SRCS))
+OBJS := $(patsubst $(SRCDIR)/%.c, $(OUTDIR)/obj/%.o, $(SRCS))
 
 # Libraries
 LIBS :=
@@ -37,27 +37,27 @@ clean:
 	@echo [Cleaning up...]
 	@rm -rf $(OUTDIR)/debug/*
 	@rm -rf $(OUTDIR)/release/*
-	@rm -rf $(OUTDIR)/o/*
+	@rm -rf $(OUTDIR)/obj/*
 
 # Outputs
 $(OUTDIR)/debug:
 	@mkdir -p "$(OUTDIR)/debug"
 $(OUTDIR)/release:
 	@mkdir -p "$(OUTDIR)/release"
-$(OUTDIR)/o:
-	@mkdir -p "$(OUTDIR)/o"
+$(OUTDIR)/obj:
+	@mkdir -p "$(OUTDIR)/obj"
 
 # Targets
 $(OUTDIR)/debug/$(TARGET): $(eval CFLAGS += $(DEBUG_FLAGS)) $(OUTDIR)/debug $(OBJS)
 	@echo [Building Target $@]
-	@$(CC) -g -std=$(STD) $(CFLAGS) -o "$@" $(filter $(OUTDIR)/o/%.o,$(OBJS))
+	@$(CC) -g -std=$(STD) $(CFLAGS) -o "$@" $(filter $(OUTDIR)/obj/%.o,$(OBJS))
 
 $(OUTDIR)/release/$(TARGET): $(eval CFLAGS += $(RELEASE_FLAGS)) $(OUTDIR)/release $(OBJS)
 	@echo [Building Target $@]
-	@$(CC) -std=$(STD) $(CFLAGS) $(LIBS) -o "$@" $(filter $(OUTDIR)/o/%.o,$(OBJS))
+	@$(CC) -std=$(STD) $(CFLAGS) $(LIBS) -o "$@" $(filter $(OUTDIR)/obj/%.o,$(OBJS))
 
 # Build objects
-$(OUTDIR)/o/%.o: $(SRCDIR)/%.c $(OUTDIR)/o
+$(OUTDIR)/obj/%.o: $(SRCDIR)/%.c $(OUTDIR)/obj
 	@echo [Building Object $@]
 	@mkdir -p "$(@D)"
 	@$(CC) -std=$(STD) $(CFLAGS) $(LIBS) -c $< -o "$@"
