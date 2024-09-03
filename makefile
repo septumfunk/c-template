@@ -12,7 +12,6 @@ SRCDIR := src
 OUTDIR := out
 
 # Functions
-SHELL := pwsh
 rwildcard = $(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
 # Sources
@@ -30,7 +29,6 @@ debug: $(OUTDIR)/debug/$(TARGET)
 fresh: clean $(OUTDIR)/debug/$(TARGET)
 release: $(OUTDIR)/release/$(TARGET) 
 	
-
 run: debug
 	@echo [Running "$(OUTDIR)/debug/$(TARGET)"]
 	@$(OUTDIR)/debug/$(TARGET)
@@ -56,10 +54,10 @@ $(OUTDIR)/debug/$(TARGET): $(eval CFLAGS += $(DEBUG_FLAGS)) $(OUTDIR)/debug $(OB
 
 $(OUTDIR)/release/$(TARGET): $(eval CFLAGS += $(RELEASE_FLAGS)) $(OUTDIR)/release $(OBJS)
 	@echo [Building Target $@]
-	@$(CC) -std=$(STD) $(CFLAGS) -o "$@" $(filter $(OUTDIR)/o/%.o,$(OBJS))
+	@$(CC) -std=$(STD) $(CFLAGS) $(LIBS) -o "$@" $(filter $(OUTDIR)/o/%.o,$(OBJS))
 
 # Build objects
 $(OUTDIR)/o/%.o: $(SRCDIR)/%.c $(OUTDIR)/o
 	@echo [Building Object $@]
 	@mkdir -p "$(@D)"
-	@$(CC) -std=$(STD) $(CFLAGS) -c $< -o "$@"
+	@$(CC) -std=$(STD) $(CFLAGS) $(LIBS) -c $< -o "$@"
